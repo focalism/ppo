@@ -1,4 +1,6 @@
 from selenium import webdriver
+from .page_factory import PageFactory
+from .panel_factor import PanelFactory
 
 
 class Context():
@@ -14,3 +16,11 @@ class Context():
             self.browser = webdriver.Edge()
         if browser_name == 'safari':
             self.browser == webdriver.Safari()
+
+    def wait_for(self, constructor):
+        if constructor.kind == 'panel':
+            factory = PanelFactory()
+        else:
+            factory = PageFactory()
+
+        return factory.wait_for(constructor)

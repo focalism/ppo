@@ -40,6 +40,7 @@ class Panel():
         if name == self.definition.name:
             return self.element_handle
         else:
+            pass
 
     def select_all(self):
         pass
