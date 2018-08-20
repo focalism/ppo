@@ -1,40 +1,46 @@
-class UIdefinition():
+class UIDefinition:
+    selector:str = ''
+    name: str = ''
 
-    def __init__(self, selector, name):
-        self.selector = selector
-        self.name = name
+    def __init__(self):
         self.descendant = list()
 
-    def root(self, selector, name=None):
-        return UIdefinition(selector, name)
+    @staticmethod
+    def root(selector, name=None):
+        UIDefinition.selector = selector
+        UIDefinition.name = name
+        return UIDefinition()
 
-    def withdescendant(self, selector_or_construactor, name=None):
-        self.descendant.append([selector_or_construactor, name])
+    def with_descendant(self, selector_or_constructor, name=None):
+        self.descendant.append([selector_or_constructor, name])
         return self
 
-    def find_uinode(self):
+    def find_ui_node(self):
         pass
 
-    def walk_uinode(self):
+    def walk_ui_node(self):
         has_descendant = len(self.descendant) > 0
         yield {
-            "selector": self.selector,
-            "name": self.name,
-            "has_descendant": has_descendant
+            'selector': self.selector,
+            'name': self.name,
+            'has_descendant': has_descendant
         }
-        for selector_or_construactor, name in self.descendant:
-            if isinstance(selector_or_construactor, str):
+        for selector_or_constructor, name in self.descendant:
+            print(name)
+            if isinstance(selector_or_constructor, str):
                 yield {
-                    "selector": selector_or_construactor,
-                    "name": name,
-                    "has_descendant": False
+                    'selector': ' '.join([self.selector, selector_or_constructor]),
+                    'name': name,
+                    'has_descendant': False
                 }
             else:
-                definition = selector_or_construactor.definition
+                definition = selector_or_constructor.definition
                 nodes = definition.walk_uinode()
+                for node in nodes:
+                    node['selector'] = ' '.join([self.selector, node['selector']])
+                    yield  node
 
-
-class UINode():
+class UINode:
 
     def __init__(self, selector, name, has_descendants):
         self.selector = selector
@@ -42,7 +48,7 @@ class UINode():
         self.has_descendants = has_descendants
 
 
-class Descnedant():
+class Descendant:
 
     def __init__(self, selector, name):
         self.selector = selector

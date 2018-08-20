@@ -1,9 +1,12 @@
-from .context import Context
 
+class Page:
+    init_panels = list()
+    url = None
+    context = None
 
-class Page():
+    def __init__(self):
+        pass
 
-    def __init__(self, browser_name):
-        self.context = Context(browser_name).browser
-        self.init_panel = list()
-        self.url = None
+    def wait_for(self):
+        for panel in self.init_panels:
+            panel.wait_for()

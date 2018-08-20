@@ -1,46 +1,72 @@
+from .uidefinition import UIDefinition
+from selenium.webdriver.remote.webdriver import WebElement
 from .context import Context
 
 
-class Panel():
+class Panel:
+    kind = 'panel'
+    definition: UIDefinition = UIDefinition
+    context: Context = None
+    element: WebElement = None
 
-    def __init__(self, browser_name):
-        self.context = Context(browser_name).browser
-        self.kind = "panel"
-        self.definition = None
-
-    @property
-    def element_handle(self):
-        self.context.find_element_by_css_selector(self.definition.selector)
-
-    def find_uinode(self):
+    def __init__(self):
         pass
 
-    def walk_uinode(self):
+    @classmethod
+    def find_ui_node(cls, name):
+        for node in cls.definition.walk_ui_node():
+            if name == node["name"]:
+                return node
+
+    def click(self, name):
+        element = self.get_element_by_name(name)
+        element.click()
+        windows = self.context.browser.window_handles()
+        self.context.browser.switch_to_window(windows[len(windows)-1])
+
+    def right_click(self, name):
+        element = self.get_element_by_name(name)
+        self.context.action_chain(self.context.browser).context_click(element).perform()
+
+    def double_click(self, name):
+        element = self.get_element_by_name(name)
+        self.context.action_chain(self.context.browser).double_click(element).perform()
+
+    def press(self, name):
+        element = self.get_element_by_name(name)
         pass
 
-    def click(self):
-        pass
+    def clear(self, name):
+        element = self.get_element_by_name(name)
+        element.clear()
 
-    def press(self):
-        pass
+    def type(self, name, text):
+        element = self.get_element_by_name(name)
+        element.send_keys(text)
 
-    def type(self):
-        pass
+    def hover(self, name):
+        element = self.get_element_by_name(name)
+        self.context.action_chain(self.context.browser).move_to_element(element).perform()
 
-    def hover(self):
-        pass
+    def text_of(self, name):
+        element = self.get_element_by_name(name)
+        return element.text
 
-    def text_of(self):
-        pass
-
-    def html_of(self):
+    def html_of(self, name):
+        element = self.get_element_by_name(name)
         pass
 
     def get_element_by_name(self, name):
         if name == self.definition.name:
-            return self.element_handle
+            return self.element
         else:
-            pass
+            node = self.find_ui_node(name)
+            element = self.element.find_element_by_css_selector(node['selector'])
+            return element
+
+    def get_attribute(self, name):
+        element = self.get_element_by_name(name)
+        return element.get_attributes()
 
     def select_all(self):
         pass
@@ -51,5 +77,6 @@ class Panel():
     def select_first(self):
         pass
 
-    def waitfor(self):
-        pass
+    def wait_for(self):
+        for node in self.definition.walk_ui_node():
+            self.context.browser.find_element_by_css_selector(node['selector'])
