@@ -1,17 +1,16 @@
-from src.panle import Panel
-from src.uidefinition import UIdefinition
+from panel.post_panel import PostPanel1
+from page.post_page import PostPage
+from src.context import Context
 
+# browser = webdriver.Chrome()
+# browser.get('http://192.168.30.115:8000/test.html')
+# selector = browser.find_element_by_css_selector('body div:nth-child(2) li:nth-child(1)')
+# print(selector.text)
+# browser.close()
 
-class TodoApp(Panel):
+def test_page_wait_for():
+    context = Context()
+    context.wait_for(PostPage)
+    context.close()
 
-    def __init__(self, browser_name):
-        super(TodoApp, self).__init__(browser_name)
-        self.definition = UIdefinition.root('test', 'test')\
-            .withdescendant('test').\
-            withdescendant('test2').\
-            withdescendant('test3')
-
-
-if __name__ == "__main__":
-    todo = TodoApp('chrome')
-    print(todo.definition.descendant)
+test_page_wait_for()
