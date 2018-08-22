@@ -1,5 +1,5 @@
 class UIDefinition:
-    selector:str = ''
+    selector: str = ''
     name: str = ''
 
     def __init__(self):
@@ -38,7 +38,8 @@ class UIDefinition:
                 nodes = definition.walk_uinode()
                 for node in nodes:
                     node['selector'] = ' '.join([self.selector, node['selector']])
-                    yield  node
+                    yield node
+
 
 class UINode:
 

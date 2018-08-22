@@ -1,18 +1,33 @@
 from .panle import Panel
+from selenium.webdriver.remote.webdriver import WebElement
+
 
 class PanelFactory:
-    def __init__(self, context):
+    def __init__(self, context, panel: Panel, scope: Panel = None):
         self.context = context
-        self.element = None
+        self.panel = panel
+        self.scope = scope
 
-    def create(self, panel: Panel):
-        panel.context = self.context
-        panel.element = self.element
-        return panel
+    def create(self, element: WebElement):
+        self.panel.context = self.context
+        self.panel.element = element
+        return self.panel(self.context, element)
 
-    def wait_for(self, panel: Panel):
-        selector = panel.definition.selector
-        self.element = self.context.browser.find_element_by_css_selector(selector)
-        for node in panel.definition.walk_ui_node():
+    def wait_for(self):
+        selector = self.panel.definition.selector
+        if self.scope:
+            element = self.scope.element.find_element_by_css_selector(selector)
+        else:
+            element = self.context.browser.find_element_by_css_selector(selector)
+        for node in self.panel.definition.walk_ui_node():
             self.context.browser.find_element_by_css_selector(node['selector'])
-        return self.create(panel)
+        return self.create(element)
+
+    def select_all(self):
+        pass
+
+    def select_first(self):
+        pass
+
+    def select_unique(self):
+        pass

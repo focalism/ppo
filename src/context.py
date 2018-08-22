@@ -1,7 +1,7 @@
 from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
 from .page_factory import PageFactory
 from .panel_factory import PanelFactory
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class Context:
@@ -19,13 +19,12 @@ class Context:
         else:
             self.browser = webdriver.Chrome()
 
-
-    def wait_for(self,page_or_panel):
+    def wait_for(self, page_or_panel):
         if page_or_panel.kind == 'panel':
-            factory = PanelFactory(self)
+            factory = PanelFactory(self, page_or_panel)
         else:
-            factory = PageFactory(self)
-        return factory.wait_for(page_or_panel)
+            factory = PageFactory(self, page_or_panel)
+        return factory.wait_for()
 
     def close(self):
         self.browser.close()
