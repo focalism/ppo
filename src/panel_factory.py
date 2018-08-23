@@ -1,9 +1,8 @@
-from .panle import Panel
 from selenium.webdriver.remote.webdriver import WebElement
 
 
 class PanelFactory:
-    def __init__(self, context, panel: Panel, scope: Panel = None):
+    def __init__(self, context, panel, scope=None):
         self.context = context
         self.panel = panel
         self.scope = scope
@@ -11,7 +10,7 @@ class PanelFactory:
     def create(self, element: WebElement):
         self.panel.context = self.context
         self.panel.element = element
-        return self.panel(self.context, element)
+        return self.panel()
 
     def wait_for(self):
         selector = self.panel.definition.selector

@@ -15,8 +15,10 @@ class UIDefinition:
         self.descendant.append([selector_or_constructor, name])
         return self
 
-    def find_ui_node(self):
-        pass
+    def find_ui_node(self, name):
+        for node in self.walk_ui_node():
+            if node['name'] == name:
+                return node
 
     def walk_ui_node(self):
         has_descendant = len(self.descendant) > 0
@@ -26,7 +28,6 @@ class UIDefinition:
             'has_descendant': has_descendant
         }
         for selector_or_constructor, name in self.descendant:
-            print(name)
             if isinstance(selector_or_constructor, str):
                 yield {
                     'selector': ' '.join([self.selector, selector_or_constructor]),
@@ -35,7 +36,7 @@ class UIDefinition:
                 }
             else:
                 definition = selector_or_constructor.definition
-                nodes = definition.walk_uinode()
+                nodes = definition.walk_ui_node()
                 for node in nodes:
                     node['selector'] = ' '.join([self.selector, node['selector']])
                     yield node

@@ -6,10 +6,11 @@ from selenium.webdriver.remote.webdriver import WebElement
 class Panel:
     kind = 'panel'
     definition: UIDefinition = UIDefinition
+    context = None
+    element: WebElement = None
 
-    def __init__(self, context, element: WebElement):
-        self.context = context
-        self.element = element
+    def __init__(self):
+        pass
 
     @classmethod
     def find_ui_node(cls, name):

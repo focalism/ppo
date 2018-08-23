@@ -8,7 +8,8 @@ class PageFactory:
         self.page = page
 
     def create(self):
-        return self.page(self.context)
+        self.page.context = self.context
+        return self.page()
 
     def wait_for(self, page: Page):
         if page.url:
