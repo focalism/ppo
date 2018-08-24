@@ -19,7 +19,7 @@ def test_with_descendant_with_panel():
     assert (isinstance(ui_definition.descendant[5][0](), Panel))
 
 
-def tet_walk_ui_node():
+def test_walk_ui_node():
     node_list = []
     for node in ui_definition.walk_ui_node():
         node_list.append(node)
@@ -31,7 +31,8 @@ def tet_walk_ui_node():
     assert (node_list[1]['name'] == 'title')
     assert (node_list[1]['has_descendant'] is False)
     assert (node_list[6]['selector'] == 'body div:nth-child(1) body div:nth-child(2)')
-    assert (node_list[6]['name'] == 'post2')
+    assert (node_list[6]['name'] != 'post2')
+    assert (node_list[6]['name'] == 'post_panel2')
     assert (node_list[6]['has_descendant'] is True)
     assert (node_list[7]['selector'] == 'body div:nth-child(1) body div:nth-child(2) h2')
     assert (node_list[7]['name'], 'title')
@@ -46,11 +47,6 @@ def test_find_ui_node():
     node = ui_definition.find_ui_node('test')
     assert (node is None)
     node = ui_definition.find_ui_node('post_panel2')
-    assert (isinstance(node['selector'])
-
-
-
-
-
+    assert (node['selector'] == 'body div:nth-child(1) body div:nth-child(2)')
 
 
