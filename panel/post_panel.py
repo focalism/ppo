@@ -3,7 +3,7 @@ from src.uidefinition import UIDefinition
 
 
 class PostPanel2(Panel):
-    definition = UIDefinition.root('body div:nth-child(2)', 'post2') \
+    definition = UIDefinition().root('body div:nth-child(2)', 'post2') \
         .with_descendant('h2', 'title') \
         .with_descendant('input', 'input') \
         .with_descendant('li:nth-child(1)', 'comment1') \
@@ -15,7 +15,7 @@ class PostPanel2(Panel):
 
 
 class PostPanel1(Panel):
-    definition = UIDefinition.root('body div:nth-child(1)', 'post1') \
+    definition = UIDefinition().root('body div:nth-child(1)', 'post1') \
         .with_descendant('h2', 'title') \
         .with_descendant('input', 'input') \
         .with_descendant('li:nth-child(1)', 'comment1') \

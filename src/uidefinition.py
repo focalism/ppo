@@ -1,15 +1,14 @@
 class UIDefinition:
-    selector: str = ''
-    name: str = ''
 
     def __init__(self):
         self.descendant = list()
+        self.selector = None
+        self.name = None
 
-    @staticmethod
-    def root(selector, name=None):
-        UIDefinition.selector = selector
-        UIDefinition.name = name
-        return UIDefinition()
+    def root(self, selector, name=None):
+        self.selector = selector
+        self.name = name
+        return self
 
     def with_descendant(self, selector_or_constructor, name=None):
         self.descendant.append([selector_or_constructor, name])
@@ -37,6 +36,13 @@ class UIDefinition:
             else:
                 definition = selector_or_constructor.definition
                 nodes = definition.walk_ui_node()
+                if name:
+                    node = nodes.__next__()
+                    yield {
+                        'selector': ' '.join([self.selector, node['selector']]),
+                        'name': name,
+                        'has_descendant': node['has_descendant']
+                    }
                 for node in nodes:
                     node['selector'] = ' '.join([self.selector, node['selector']])
                     yield node
