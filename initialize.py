@@ -47,7 +47,6 @@ def initialize(options: BrowserOptions):
     if not os.path.exists(options.report_dir):
         os.makedirs(options.report_dir)
     factory = ContextFactory(browser)
-    context = factory.create()
-    return context
+    return factory.create()
 
 context = initialize(config['browser_options'])
