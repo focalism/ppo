@@ -1,6 +1,7 @@
 from .uidefinition import UIDefinition
 from .panel_factory import PanelFactory
 from selenium.webdriver.remote.webdriver import WebElement
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class Panel:
@@ -26,11 +27,11 @@ class Panel:
 
     def right_click(self, name):
         element = self.get_element_by_name(name)
-        self.context.action_chain(self.context.browser).context_click(element).perform()
+        ActionChains(self.context.browser).context_click(element).perform()
 
     def double_click(self, name):
         element = self.get_element_by_name(name)
-        self.context.action_chain(self.context.browser).double_click(element).perform()    
+        ActionChains(self.context.browser).double_click(element).perform()
 
     def clear(self, name):
         element = self.get_element_by_name(name)
@@ -42,7 +43,7 @@ class Panel:
 
     def hover(self, name):
         element = self.get_element_by_name(name)
-        self.context.action_chain(self.context.browser).move_to_element(element).perform()
+        ActionChains(self.context.browser).move_to_element(element).perform()
 
     def text_of(self, name):
         element = self.get_element_by_name(name)

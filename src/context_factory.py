@@ -1,11 +1,11 @@
-from selenium import webdriver
+
 from .context import Context
 
 
 class ContextFactory:
-    def __init__(self):
+    def __init__(self, browser):
+        self.browser = browser
         pass
 
-    @staticmethod
-    def create():
-        return Context(webdriver)
+    def create(self):
+        return Context(self.browser)
