@@ -1,6 +1,6 @@
 from panel.post_panel import PostPanel1
 from page.post_page import PostPage
-from . import context
+from initialize import context
 from selenium import webdriver
 # browser = webdriver.Chrome()
 # browser.get('http://192.168.30.115:8000/test.html')
