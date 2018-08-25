@@ -10,7 +10,6 @@ yaml_path = os.path.join(os.getcwd(), 'test/browser.yaml')
 if not os.path.exists(yaml_path):
     yaml_path = os.path.join(os.getcwd(), 'browser.yaml')
 config = get_config(yaml_path)
-print(config['browser_options'])
 
 
 def initialize(options: BrowserOptions):
@@ -51,4 +50,4 @@ def initialize(options: BrowserOptions):
     context = factory.create()
     return context
 
-context = initialize(config)
+context = initialize(config['browser_options'])
