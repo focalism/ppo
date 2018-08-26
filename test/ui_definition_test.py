@@ -1,42 +1,42 @@
-from panel.post_panel import PostPanel1
+from panel.todo_panle import TodoApp
 from src.panle import Panel
 
-ui_definition = PostPanel1.definition
+ui_definition = TodoApp.definition
 
 
 def test_root():
-    assert (ui_definition.name == 'post1')
-    assert (ui_definition.selector == 'body div:nth-child(1)')
+    assert (ui_definition.name == 'app')
+    assert (ui_definition.selector == 'div.app')
 
 
 def test_with_descendant_selector():
-    assert (ui_definition.descendant[0][0] == 'h2')
+    assert (ui_definition.descendant[0][0] == 'div.sa')
     assert (ui_definition.descendant[0][1] == 'title')
 
 
 def test_with_descendant_with_panel():
-    assert (len(ui_definition.descendant) == 6)
-    assert (isinstance(ui_definition.descendant[5][0](), Panel))
+    assert (len(ui_definition.descendant) == 11)
+    assert (isinstance(ui_definition.descendant[4][0](), Panel))
 
 
 def test_walk_ui_node():
     node_list = []
     for node in ui_definition.walk_ui_node():
         node_list.append(node)
-    assert (len(node_list) == 12)
-    assert (node_list[0]['selector'] == 'body div:nth-child(1)')
-    assert (node_list[0]['name'] == 'post1')
+    assert (len(node_list) == 11)
+    assert (node_list[0]['selector'] == 'div.app ')
+    assert (node_list[0]['name'] == 'app')
     assert (node_list[0]['has_descendant'] is True)
-    assert (node_list[1]['selector'] == 'body div:nth-child(1) h2')
+    assert (node_list[1]['selector'] == 'div.app div.sa')
     assert (node_list[1]['name'] == 'title')
     assert (node_list[1]['has_descendant'] is False)
-    assert (node_list[6]['selector'] == 'body div:nth-child(1) body div:nth-child(2)')
-    assert (node_list[6]['name'] != 'post2')
-    assert (node_list[6]['name'] == 'post_panel2')
-    assert (node_list[6]['has_descendant'] is True)
-    assert (node_list[7]['selector'] == 'body div:nth-child(1) body div:nth-child(2) h2')
-    assert (node_list[7]['name'], 'title')
-    assert (node_list[7]['has_descendant'] is False)
+    assert (node_list[4]['selector'] == 'div.app test')
+    assert (node_list[4]['name'] != 'test')
+    assert (node_list[4]['name'] == 'post_panel2')
+    assert (node_list[4]['has_descendant'] is True)
+    assert (node_list[7]['selector'] == 'div.app test div.add')
+    assert (node_list[7]['name'] == 'and')
+    assert (node_list[7]['has_descendant'] is True)
 
 
 def test_find_ui_node():
