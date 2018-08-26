@@ -1,21 +1,26 @@
 from initialize import context
+from initialize import browser_option
 import pytest
+import time
+from os.path import join
 from _pytest.runner import runtestprotocol
 
 
 @pytest.fixture(scope='session')
 def fixture_session():
     yield context
-    context.close()
 
 
-def pytest_runtest_protocol(item, next_item):
-    reports = runtestprotocol(item, nextitem=next_item)
+def pytest_runtest_protocol(item):
+    reports = runtestprotocol(item)
     for report in reports:
         if report.when == 'call':
             if report.outcome == 'failed':
-                picture_name = item.name + '.png'
-                context.browser.save_screenshot(picture_name)
+                if browser_option.screen_shot:
+                    report_dir = browser_option.report_dir
+                    picture_name = item.name + '.png'
+                    picture_path = join(report_dir, picture_name)
+                    context.browser.save_screenshot(picture_path)
     return True
 
 
