@@ -42,11 +42,11 @@ def test_walk_ui_node():
 def test_find_ui_node():
     node = ui_definition.find_ui_node('title')
     assert (node['name'] == 'title')
-    assert (node['selector'] == 'body div:nth-child(1) h2')
+    assert (node['selector'] == 'div.sa')
     assert (node['has_descendant'] is False)
     node = ui_definition.find_ui_node('test')
     assert (node is None)
     node = ui_definition.find_ui_node('post_panel2')
-    assert (node['selector'] == 'body div:nth-child(1) body div:nth-child(2)')
+    assert (node['selector'] == 'div.app test')
 
 
