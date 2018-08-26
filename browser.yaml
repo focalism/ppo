@@ -1,8 +1,8 @@
 browser_options:
   browser_name:
   headless: False
-  screen_shot: False
-  report_dir:
-  wind_size_x: 1920
-  wind_size_y: 1080
+  screen_shot: True
+  report_dir: './report'
+  wind_size_x: 1200
+  wind_size_y: 1000
   executable_path:
