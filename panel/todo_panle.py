@@ -6,7 +6,7 @@ class AndPanel(Panel):
     definition = UIDefinition().root('div.add', 'and') \
         .with_descendant('div.and1', 'and1') \
         .with_descendant('div.and2', 'and2') \
-        .withd_escendant('div.and3')
+        .with_descendant('div.and3')
     def __init__(self):
         super(AndPanel, self).__init__()
 
@@ -29,7 +29,7 @@ class TodoApp(Panel):
         .with_descendant('div.sa', 'title') \
         .with_descendant('div.cd') \
         .with_descendant('div.wd') \
-        .with_descendant(TestPanel 'post_panle2')
+        .with_descendant(TestPanel, 'post_panle2')
 
     def __init__(self):
         super(TodoApp, self).__init__()
