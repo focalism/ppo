@@ -1,4 +1,4 @@
-from . import context
+from initialize import context
 import pytest
 from _pytest.runner import runtestprotocol
 
@@ -30,5 +30,5 @@ def fixture_class():
 
 
 @pytest.fixture(scope='function')
-def fixture_function(request):
+def fixture_function():
     pass
