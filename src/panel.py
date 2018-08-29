@@ -1,5 +1,8 @@
 from .uidefinition import UIDefinition
 from .panel_factory import PanelFactory
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebElement
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -11,27 +14,30 @@ class Panel:
     element: WebElement = None
 
     def __init__(self):
-        pass
+        self.WebDriverWait = WebDriverWait
+        self.By = By
+        self.EC = EC
+        self.ActionChains = ActionChains
 
-    @classmethod
-    def find_ui_node(cls, name):
-        for node in cls.definition.walk_ui_node():
+
+    def find_ui_node(self, name):
+        for node in self.definition.walk_ui_node():
             if name == node["name"]:
                 return node
 
     def click(self, name):
         element = self.get_element_by_name(name)
         element.click()
-        windows = self.context.browser.window_handles()
+        windows = self.context.browser.window_handles
         self.context.browser.switch_to_window(windows[len(windows)-1])
 
     def right_click(self, name):
         element = self.get_element_by_name(name)
-        ActionChains(self.context.browser).context_click(element).perform()
+        self.ActionChains(self.context.browser).context_click(element).perform()
 
     def double_click(self, name):
         element = self.get_element_by_name(name)
-        ActionChains(self.context.browser).double_click(element).perform()
+        self.ActionChains(self.context.browser).double_click(element).perform()
 
     def clear(self, name):
         element = self.get_element_by_name(name)
@@ -43,7 +49,7 @@ class Panel:
 
     def hover(self, name):
         element = self.get_element_by_name(name)
-        ActionChains(self.context.browser).move_to_element(element).perform()
+        self.ActionChains(self.context.browser).move_to_element(element).perform()
 
     def text_of(self, name):
         element = self.get_element_by_name(name)
@@ -78,6 +84,27 @@ class Panel:
             ' { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; '
             'return items;', element)
         return attributes
+
+    def wait_for_element_locate(self, name=None, css_selector=None, timeout=10):
+        """ An expectation for checking that an element is present on the DOM
+        of a page. This does not necessarily mean that the element is visible.
+        locator - used to find the element
+        returns the WebElement once it is located
+        """
+        if name:
+            css_selector = self.find_ui_node(name)['selector']
+        self.WebDriverWait(self.context.browser, timeout).until(
+            self.EC.presence_of_element_located((self.By.CSS_SELECTOR, css_selector))
+        )
+
+    def wait_for_all_element_locate(self, name=None, css_selector=None, timeout=10):
+        if name:
+            css_selector = self.find_ui_node(name)['selector']
+            self.WebDriverWait(self.context.browser, timeout).until(
+                self.EC.presence_of_all_elements_located(self.By.CSS_SELECTOR, css_selector)
+            )
+
+
 
     def select_all(self):
         pass
