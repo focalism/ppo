@@ -1,4 +1,4 @@
-from src.panle import Panel
+from src.panel import Panel
 from src.uidefinition import UIDefinition
 
 
@@ -29,7 +29,7 @@ class TodoApp(Panel):
         .with_descendant('div.sa', 'title') \
         .with_descendant('div.cd') \
         .with_descendant('div.wd') \
-        .with_descendant(TestPanel, 'post_panle2')
+        .with_descendant(TestPanel, 'post_panel2')
 
     def __init__(self):
         super(TodoApp, self).__init__()
