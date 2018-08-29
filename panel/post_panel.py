@@ -1,4 +1,4 @@
-from src.panle import Panel
+from src.panel import Panel
 from src.uidefinition import UIDefinition
 
 
@@ -20,8 +20,9 @@ class PostPanel1(Panel):
         .with_descendant('input', 'input') \
         .with_descendant('li:nth-child(1)', 'comment1') \
         .with_descendant('li:nth-child(2)', 'comment2') \
-        .with_descendant('li:nth-child(3)', 'comment3')
-        # .with_descendant(PostPanel2, 'post_panel2')
+        .with_descendant('li:nth-child(3)', 'comment3')\
+        .with_descendant('a', 'link')
+
 
     def __init__(self):
         super(PostPanel1, self).__init__()
