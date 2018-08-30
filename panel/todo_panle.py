@@ -19,9 +19,6 @@ class TestPanel(Panel):
         .with_descendant('test3') \
         .with_descendant(AndPanel)
 
-    def __init__(self):
-        super(TestPanel, self).__init__()
-
 
 class TodoApp(Panel):
 
@@ -31,8 +28,6 @@ class TodoApp(Panel):
         .with_descendant('div.wd') \
         .with_descendant(TestPanel, 'post_panel2')
 
-    def __init__(self):
-        super(TodoApp, self).__init__()
 
 
 

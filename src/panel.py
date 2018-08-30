@@ -13,17 +13,14 @@ class Panel:
     context = None
     element: WebElement = None
 
-    def __init__(self):
-        self.WebDriverWait = WebDriverWait
-        self.By = By
-        self.EC = EC
-        self.ActionChains = ActionChains
-
 
     def find_ui_node(self, name):
         for node in self.definition.walk_ui_node():
             if name == node["name"]:
                 return node
+        raise Exception('Can not find the {} in {}'.format(
+            name, self.definition)
+        )
 
     def click(self, name):
         element = self.get_element_by_name(name)
@@ -33,11 +30,11 @@ class Panel:
 
     def right_click(self, name):
         element = self.get_element_by_name(name)
-        self.ActionChains(self.context.browser).context_click(element).perform()
+        ActionChains(self.context.browser).context_click(element).perform()
 
     def double_click(self, name):
         element = self.get_element_by_name(name)
-        self.ActionChains(self.context.browser).double_click(element).perform()
+        ActionChains(self.context.browser).double_click(element).perform()
 
     def clear(self, name):
         element = self.get_element_by_name(name)
@@ -49,7 +46,7 @@ class Panel:
 
     def hover(self, name):
         element = self.get_element_by_name(name)
-        self.ActionChains(self.context.browser).move_to_element(element).perform()
+        ActionChains(self.context.browser).move_to_element(element).perform()
 
     def text_of(self, name):
         element = self.get_element_by_name(name)
@@ -93,17 +90,20 @@ class Panel:
         """
         if name:
             css_selector = self.find_ui_node(name)['selector']
-        self.WebDriverWait(self.context.browser, timeout).until(
-            self.EC.presence_of_element_located((self.By.CSS_SELECTOR, css_selector))
+        WebDriverWait(self.context.browser, timeout).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, css_selector))
         )
 
     def wait_for_all_element_locate(self, name=None, css_selector=None, timeout=10):
         if name:
             css_selector = self.find_ui_node(name)['selector']
-            self.WebDriverWait(self.context.browser, timeout).until(
-                self.EC.presence_of_all_elements_located(self.By.CSS_SELECTOR, css_selector)
-            )
+        WebDriverWait(self.context.browser, timeout).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, css_selector))
+        )
 
+    def wait_for_element_visible(self, name=None, css_selector=None, timeout=10):
+        if name:
+            css_selector = self.find_ui_node(name)['selector']
 
 
     def select_all(self):

@@ -8,5 +8,3 @@ class PostPage(Page):
     url = 'http://192.168.30.115:8000/test.html'
     kind = 'page'
 
-    def __init__(self):
-        super(PostPage, self).__init__()
