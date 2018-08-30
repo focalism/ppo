@@ -1,14 +1,23 @@
 from initialize import context
 from initialize import browser_option
 import pytest
-import time
 from os.path import join
 from _pytest.runner import runtestprotocol
 
 
+@pytest.fixture(scope='function')
+def fixture_function():
+    return context
+
 @pytest.fixture(scope='session')
-def fixture_session():
-    yield context
+def fixture_teardown():
+    context.quit()
+
+
+def pytest_runtest_setup(item):
+    context.browser.execute_script("window.open('');")
+    context.browser.switch_to.window(context.browser.window_handles[-1])
+
 
 
 def pytest_runtest_protocol(item):
@@ -21,19 +30,8 @@ def pytest_runtest_protocol(item):
                     picture_name = item.name + '.png'
                     picture_path = join(report_dir, picture_name)
                     context.browser.save_screenshot(picture_path)
-    return True
 
 
-@pytest.fixture(scope='module')
-def fixture_module():
-    pass
-
-
-@pytest.fixture(scope='class')
-def fixture_class():
-    pass
-
-
-@pytest.fixture(scope='function')
-def fixture_function():
-    pass
+def pytest_runtest_teardown(item):
+    context.browser.close()
+    context.browser.switch_to.window(context.browser.window_handles[-1])
