@@ -49,4 +49,3 @@ def test_find_ui_node():
     node = ui_definition.find_ui_node('post_panel2')
     assert (node['selector'] == 'div.app test')
 
-
