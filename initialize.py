@@ -18,7 +18,7 @@ def initialize(options: BrowserOptions):
     options_args = {}
     if options.browser_name == 'firefox':
         browser_options = webdriver.FirefoxOptions()
-        browser = webdriver.Firefox()
+        browser = webdriver.Firefox
         options_args.update({'firefox_options':browser_options})
     elif options.browser_name == 'safari':
         browser_options = None
