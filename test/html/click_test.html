@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<br>
+<div>
+<p>This example demonstrates how to assign an "ondblclick" event to a p element.</p>
+
+    <button id="double_click" ondblclick="DoubleClick()">Double-click me</button>
+    <button id="single_click" onclick="SingleClick()">Single-click me</button>
+    <button id="jump"><a href="D:\code\ppo\test.html">百度一下</a></button>
+    <button id="jump_new_page"><a href="D:\code\ppo\test.html" target="view_window">百度一下</a></button>
+
+</div>
+
+<div id="login">
+  <input type="text" id="name" value="John"><br>
+  <input type="text" id="email" value="Doe"><br>
+  <input type="submit" value="Submit form">
+</div>
+
+
+<div id="hover">
+    <button id="mouse_hover" onmouseover="MouseHover()">Mouse hover</button>
+</div>
+
+
+<script>
+function DoubleClick() {
+    document.getElementById("double_click").innerHTML = "I was double-clicked!";
+}
+
+function SingleClick() {
+    document.getElementById("single_click").innerHTML = "I was Single-clicked!";
+}
+
+function MouseHover(){
+    document.getElementById('mouse_hover').innerHTML = "I was Mouse-over!"
+}
+
+</script>
+
+</body>
+</html>
