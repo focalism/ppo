@@ -2,37 +2,37 @@ from initialize import context
 from initialize import browser_option
 import pytest
 from os.path import join
-from _pytest.runner import runtestprotocol
 
 
 @pytest.fixture(scope='session')
 def fixture_session():
-    return context
+    yield context
+    context.quit()
 
 @pytest.fixture(scope='session')
 def fixture_teardown():
     context.quit()
 
 
-# def pytest_runtest_setup(item):
-#     context.browser.execute_script("window.open('');")
-#     context.browser.switch_to.window(context.browser.window_handles[-1])
+def pytest_runtest_setup():
+    context.browser.execute_script("window.open('');")
+    context.browser.switch_to.window(context.browser.window_handles[-1])
 
 
-def pytest_runtest_protocol(item):
-    print(item)
-    reports = runtestprotocol(item)
-    for report in reports:
-        print(report.when)
-        if report.when == 'call':
-            if report.outcome == 'failed':
-                if browser_option.screen_shot:
-                    report_dir = browser_option.report_dir
-                    picture_name = item.name + '.png'
-                    picture_path = join(report_dir, picture_name)
-                    context.browser.save_screenshot(picture_path)
+@pytest.hookimpl(hookwrapper=True, tryfirst=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    rep = outcome.get_result()
+    setattr(item, "rep_" + rep.when, rep)
+    if rep.when == 'call':
+        if rep.failed:
+            if browser_option.screen_shot:
+                report_dir = browser_option.report_dir
+                picture_name = item.name + '.png'
+                picture_path = join(report_dir, picture_name)
+                context.browser.save_screenshot(picture_path)
 
 
-# def pytest_runtest_teardown(item):
-#     context.browser.close()
-#     context.browser.switch_to.window(context.browser.window_handles[-1])
+def pytest_runtest_teardown():
+    context.browser.close()
+    context.browser.switch_to.window(context.browser.window_handles[-1])
