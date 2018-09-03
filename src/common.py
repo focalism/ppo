@@ -8,6 +8,7 @@ class BrowserOptions:
         self.wind_size_y = configs['wind_size_y']
         self.executable_path = configs['executable_path']
 
+
 class Browser:
     def __init__(self, browser, excutor_path, options):
         self.executor_path = excutor_path

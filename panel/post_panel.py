@@ -21,5 +21,3 @@ class PostPanel1(Panel):
         .with_descendant('a', 'link')
 
 
-
-

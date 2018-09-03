@@ -10,6 +10,7 @@ class ClickPanel(Panel):
         .with_descendant('#jump', 'jump')\
         .with_descendant('#jump_new_page', 'jump new')
 
+
 class LoginPanel(Panel):
 
     definition = UIDefinition().root('#login')\

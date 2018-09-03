@@ -7,8 +7,6 @@ class AndPanel(Panel):
         .with_descendant('div.and1', 'and1') \
         .with_descendant('div.and2', 'and2') \
         .with_descendant('div.and3')
-    def __init__(self):
-        super(AndPanel, self).__init__()
 
 
 class TestPanel(Panel):

@@ -13,7 +13,6 @@ class Panel:
     context = None
     element: WebElement = None
 
-
     def find_ui_node(self, name):
         for node in self.definition.walk_ui_node():
             if name == node["name"]:
@@ -104,7 +103,6 @@ class Panel:
     def wait_for_element_visible(self, name=None, css_selector=None, timeout=10):
         if name:
             css_selector = self.find_ui_node(name)['selector']
-
 
     def select_all(self):
         pass
