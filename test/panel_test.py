@@ -16,14 +16,15 @@ def test_find_ui_node(fixture_session: Context):
 def test_click_element(fixture_session: Context):
     fixture_session.browser.get('file:///D:/code/ppo/test/html/click_test.html')
     panel = fixture_session.wait_for(ClickPanel)
-    assert  (panel.text_of('single')== 'Single-click me')
+    assert (panel.text_of('single') == 'Single-click me')
     panel.click('single')
     assert (panel.text_of('single') == 'I was Single-clicked!')
+
 
 def test_double_click_element(fixture_session: Context):
     fixture_session.browser.get('file:///D:/code/ppo/test/html/click_test.html')
     panel = fixture_session.wait_for(ClickPanel)
-    assert  (panel.text_of('double')== 'Double-click me')
+    assert (panel.text_of('double') == 'Double-click me')
     panel.double_click('double')
     assert (panel.text_of('double') == 'I was double-clicked!')
 
@@ -34,13 +35,15 @@ def test_page_jump(fixture_session:Context):
     panel.click('jump')
     assert (panel.context.browser.current_url == 'file:///D:/code/ppo/test.html')
 
-def test_page_jump_new(fixture_session:Context):
+
+def test_page_jump_new(fixture_session: Context):
     fixture_session.browser.get('file:///D:/code/ppo/test/html/click_test.html')
     panel = fixture_session.wait_for(ClickPanel)
     panel.click('jump new')
     assert (panel.context.browser.current_url == 'file:///D:/code/ppo/test.html')
 
-def test_clear_default_value(fixture_session:Context):
+
+def test_clear_default_value(fixture_session: Context):
     fixture_session.browser.get('file:///D:/code/ppo/test/html/click_test.html')
     panel = fixture_session.wait_for(LoginPanel)
     assert (panel.get_attribute('name', 'value') == 'John')
