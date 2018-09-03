@@ -9,6 +9,7 @@ def fixture_session():
     yield context
     context.quit()
 
+
 @pytest.fixture(scope='session')
 def fixture_teardown():
     context.quit()

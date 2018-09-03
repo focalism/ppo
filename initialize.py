@@ -13,7 +13,6 @@ config = get_config(yaml_path)
 browser_option = BrowserOptions(config['browser_options'])
 
 
-
 def initialize(options: BrowserOptions):
     options_args = {}
     if options.browser_name == 'firefox':
