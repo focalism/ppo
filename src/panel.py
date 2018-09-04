@@ -94,6 +94,11 @@ class Panel:
         )
 
     def wait_for_all_element_locate(self, name=None, css_selector=None, timeout=10):
+        """ An expectation for checking that there is at least one element present
+        on a web page.
+        locator is used to find the element
+        returns the list of WebElements once they are located
+        """
         if name:
             css_selector = self.find_ui_node(name)['selector']
         WebDriverWait(self.context.browser, timeout).until(
@@ -101,8 +106,78 @@ class Panel:
         )
 
     def wait_for_element_visible(self, name=None, css_selector=None, timeout=10):
+        """ An expectation for checking that an element is present on the DOM of a
+        page and visible. Visibility means that the element is not only displayed
+        but also has a height and width that is greater than 0.
+        locator - used to find the element
+        returns the WebElement once it is located and visible
+        """
         if name:
             css_selector = self.find_ui_node(name)['selector']
+        WebDriverWait(self.context.browser, timeout).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, css_selector))
+        )
+
+    def wait_for_element_invisible(self, name=None, css_selector=None, timeout=10):
+        """ An Expectation for checking that an element is either invisible or not
+        present on the DOM.
+        locator used to find the element
+        """
+        if name:
+            css_selector = self.find_ui_node(name)['selector']
+        WebDriverWait(self.context.browser, timeout).until(
+            EC.invisibility_of_element_located((By.CSS_SELECTOR, css_selector))
+        )
+
+    def wait_for_all_element_visible(self, name=None, css_selector=None, timeout=10):
+        """ An expectation for checking that all elements are present on the DOM of a
+        page and visible. Visibility means that the elements are not only displayed
+        but also has a height and width that is greater than 0.
+        locator - used to find the elements
+        returns the list of WebElements once they are located and visible
+        """
+        if name:
+            css_selector = self.find_ui_node(name)['selector']
+        WebDriverWait(self.context.browser, timeout).until(
+            EC.visibility_of_all_elements_located((By.CSS_SELECTOR, css_selector))
+        )
+
+    def wait_for_any_element_visible(self, name=None, css_selector=None, timeout=10):
+        """ An expectation for checking that there is at least one element visible
+        on a web page.
+        locator is used to find the element
+        returns the list of WebElements once they are located
+        """
+        if name:
+            css_selector = self.find_ui_node(name)['selector']
+        WebDriverWait(self.context.browser, timeout).until(
+            EC.visibility_of_any_elements_located((By.CSS_SELECTOR, css_selector))
+        )
+
+    def wait_for_element_clickable(self, name=None, css_selector=None, timeout=10):
+        """ An Expectation for checking an element is visible and enabled such that
+        you can click it."""
+        if name:
+            css_selector = self.find_ui_node(name)['selector']
+        WebDriverWait(self.context.browser, timeout).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, css_selector))
+        )
+
+    def wait_for_element_selector(self, name=None, css_selector=None, timeout=10):
+        """ An expectation for checking the selection is selected.
+        element is WebElement object
+        """
+        if name:
+            css_selector = self.find_ui_node(name)['selector']
+        WebDriverWait(self.context.browser, timeout).until(
+            EC.element_to_be_selected((By.CSS_SELECTOR, css_selector))
+        )
+
+    def wait_alert_is_present(self,  timeout=10):
+        """ Expect an alert to be present."""
+        WebDriverWait(self.context.browser, timeout).until(
+            EC.alert_is_present()
+        )
 
     def select_all(self):
         pass
