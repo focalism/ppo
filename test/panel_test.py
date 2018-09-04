@@ -111,3 +111,14 @@ def test_get_attributes(fixture_session: Context):
     assert (attrs['id'] == 'single_click')
     assert (attrs['onclick'] == 'SingleClick()')
 
+
+def test_wait_for_element_locate_with_name(fixture_session: Context):
+    fixture_session.browser.get('file:///D:/code/ppo/test/html/click_test.html')
+    panel = fixture_session.wait_for(ClickPanel)
+    panel.wait_for_all_element_locate(name='single')
+
+
+def test_wait_for_element_locate_with_css_selector(fixture_session: Context):
+    fixture_session.browser.get('file:///D:/code/ppo/test/html/click_test.html')
+    panel = fixture_session.wait_for(ClickPanel)
+    panel.wait_for_all_element_locate(css_selector='#single_click')
