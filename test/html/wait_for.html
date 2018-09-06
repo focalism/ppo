@@ -6,5 +6,43 @@
 </head>
 <body>
 
+<div id = "div1">
+    <p id = "p1" style="display:none;">this is  paragraph</p>
+    <p id = "p2">this is another paragraph</p>
+</div>
+
+
+<script>
+
+function sleep(time){
+    return new Promise((resolve)=>setTimeout(resolve, time))
+}
+
+
+sleep(5000).then(()=>{
+var para = document.createElement("p");
+var node = document.createTextNode("this is new paragraph");
+para.appendChild(node);
+var element = document.getElementById("div1");
+element.appendChild(para);
+})
+
+
+sleep(2000).then(()=>{
+var element = document.getElementById("p1");
+element.style.display='block'
+})
+
+
+sleep(8000).then(()=>{
+var element = document.getElementById("p2");
+element.style.display='none'
+})
+
+
+</script>
+
+
 </body>
+
 </html>
